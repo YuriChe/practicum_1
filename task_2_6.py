@@ -1,5 +1,5 @@
 # Импортируйте нужную библиотеку.
-import datetime
+from datetime import datetime 
 
 
 class Store:
@@ -15,7 +15,7 @@ class Store:
 
     def get_info(self, text_date) -> str:
         # С помощью шаблона даты преобразуйте строку date_str в объект даты:
-        date_object = datetime.strptime(...)
+        date_object = datetime.strptime(text_date, '%d.%m.%Y')
 
         # Передайте в метод __is_open() объект даты date_object и определите,
         # работает ли магазин в указанную дату.
@@ -29,21 +29,27 @@ class Store:
 
 
 class MiniStore(Store):
-    # Переопределите метод __is_open().
-    # Обратите внимание на имя метода/name mangling
+
     def _Store__is_open(self, date: datetime) -> bool:
+        if date.weekday() == 5 or date.weekday() == 6:
+            return False
+        return True
 
 
 class WeekendStore(Store):
     # Переопределите метод __is_open().
     # Обратите внимание на имя метода/name mangling
     def _Store__is_open(self, date: datetime) -> bool:
+        if date.weekday() == 5 or date.weekday() == 6:
+            return True
+        return False
 
 
 class NonStopStore(Store):
     # Переопределите метод __is_open().
     # Обратите внимание на имя метода/name mangling
     def _Store__is_open(self, date: datetime) -> bool:
+        return True
 
 
 mini_store = MiniStore('Улица Немига, 57')
